@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
+using System.Windows.Threading;
 
 namespace FFXIVtweet.Behaviors
 {
@@ -23,7 +24,11 @@ namespace FFXIVtweet.Behaviors
 
         private void _scrollViewer_LayoutUpdated(object sender, EventArgs e)
         {
-            _scrollViewer.ScrollToEnd();
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() =>
+            {
+                _scrollViewer.ScrollToEnd();
+                Thread.Sleep(1);
+            }));
         }
 
         protected override void OnDetaching()
